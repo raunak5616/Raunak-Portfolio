@@ -1,37 +1,33 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const texts = ["Raunak Kumar", "a Developer", "a Designer", "a Creator"];
+const texts = ["MERN Stack Developer", "UI/UX Enthusiast", "Problem Solver", "Creative Thinker"];
 
 const TypingText = () => {
-  const [count, setCount] = useState(0);
   const [index, setIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
-    const currentText = texts[count];
-
-    const timeout = setTimeout(() => {
-      setDisplayText(currentText.slice(0, index + 1));
-      setIndex(index + 1);
-
-      // when word finished
-      if (index === currentText.length) {
-        setTimeout(() => {
-          setIndex(0);
-          setDisplayText("");
-          setCount((count + 1) % texts.length);
-        }, 800); // pause after word
-      }
-    }, 150); // typing speed
-
-    return () => clearTimeout(timeout);
-  }, [index, count]);
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % texts.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">
-      {displayText}
-      <span className="animate-pulse">|</span>
-    </span>
+    <div className="h-12 flex items-center">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={texts[index]}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 font-bold"
+        >
+          {texts[index]}
+        </motion.span>
+      </AnimatePresence>
+    </div>
   );
 };
 

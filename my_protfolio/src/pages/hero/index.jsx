@@ -1,96 +1,166 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Github, Linkedin } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
 import profileImg from "../../assets/raunak2.png";
 import AnimatedSubtitle from "../../component/animatedText";
+import MagneticButton from "../../component/MagneticButton";
 
 const Hero = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+  };
+
   return (
-   <section className="relative z-10 min-h-screen flex items-center px-6 md:px-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-20 overflow-hidden">
 
-  {/* Background Effects */}
-  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-    <div className="absolute -top-32 -right-32 w-[520px] h-[520px]
-      bg-purple-600/40 rounded-full blur-[120px]" />
+      <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
 
-    <div className="absolute -bottom-32 -left-32 w-[520px] h-[520px]
-      bg-pink-600/30 rounded-full blur-[120px]" />
 
-    <div className="absolute inset-0
-      bg-gradient-to-b from-transparent via-black/30 to-black/70" />
-  </div>
-
-  <div className="relative z-10 grid md:grid-cols-2 gap-20 items-center w-full">
-   
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col"
         >
-          <span className="text-sm tracking-widest text-purple-400 uppercase">
-            Welcome to my world ✨
-          </span>
+          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-6">
+            <span className="w-8 h-px bg-cyan-400" />
+            <span className="text-sm font-semibold tracking-[0.2em] text-cyan-400 uppercase">
+              Full Stack Developer
+            </span>
+          </motion.div>
 
-          <h1 className="mt-4 text-5xl md:text-7xl font-extrabold leading-tight">
-            Hi, I’m <span className="text-purple-400">Raunak</span>
-          </h1>
+          <motion.h1
+            variants={itemVariants}
+            className="text-6xl md:text-8xl font-bold leading-[1.1] mb-6"
+          >
+            I craft <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/40">
+              Digital
+            </span> <br />
+            <span className="relative inline-block">
+              Experiences
+              <motion.div
+                className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-cyan-400 to-violet-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 1, duration: 1.5, ease: "circOut" }}
+              />
+            </span>
+          </motion.h1>
 
-          <h2 className="mt-4 text-3xl md:text-4xl font-semibold text-white/90">
+          <motion.div variants={itemVariants} className="text-xl md:text-2xl text-white/60 mb-8 max-w-lg">
+            <span className="text-white/80">Hi, I'm Raunak.</span>
             <AnimatedSubtitle />
-          </h2>
+          </motion.div>
 
-          <p className="mt-6 max-w-xl text-white/60 leading-relaxed">
-            I design and build modern, animated, and scalable web experiences
-            using React, MERN stack, and clean UI principles.
-          </p>
+          <motion.p variants={itemVariants} className="text-lg text-white/40 leading-relaxed max-w-lg mb-12">
+            Transforming complex ideas into seamless, high-performance web applications
+            with a focus on modern aesthetic and user-centric design.
+          </motion.p>
 
-          {/* CTA */}
-          <div className="mt-10 flex gap-5">
-            <Link
-              to="/projects"
-              className="flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-black font-semibold"
-            >
-              My Projects <ArrowRight size={18} />
-            </Link>
 
-            <a
-              href="/RAUNAK_RESUME.pdf"
-              download
-              className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 transition"
-            >
-              Download CV
-            </a>
-          </div>
-          <div className="mt-8 flex gap-5 text-white/60">
-            <a href="https://github.com/raunak5616" target="_blank">
-              <Github />
-            </a>
-            <a href="https://linkedin.com/in/raunak-kumar-65a392256" target="_blank">
-              <Linkedin />
-            </a>
-          </div>
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-6 items-center">
+            <MagneticButton>
+              <Link
+                to="/projects"
+                className="group flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-bold transition-all hover:pr-8"
+              >
+                View Work
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+              </Link>
+            </MagneticButton>
+
+            <MagneticButton>
+              <a
+                href="/Raunak_Kumar_Resume.pdf"
+                download
+                className="flex items-center gap-3 px-10 py-5 rounded-full glass border border-white/10 hover:bg-white/5 transition-colors font-semibold"
+              >
+                <Download size={20} className="text-cyan-400" />
+                Resume
+              </a>
+            </MagneticButton>
+          </motion.div>
+
+
+          <motion.div variants={itemVariants} className="mt-12 flex gap-8">
+            {[
+              { icon: Github, href: "https://github.com/raunak5616", color: "hover:text-white" },
+              { icon: Linkedin, href: "https://linkedin.com/in/raunak-kumar-65a392256", color: "hover:text-[#0077b5]" },
+              { icon: Mail, href: "mailto:raunakkh8789@gmail.com", color: "hover:text-pink-400" }
+            ].map((social, i) => (
+              <a
+                key={i}
+                href={social.href}
+                target="_blank"
+                className={`text-white/30 transition-all duration-300 hover:scale-110 ${social.color}`}
+              >
+                <social.icon size={26} />
+              </a>
+            ))}
+          </motion.div>
         </motion.div>
 
-        {/* RIGHT AVATAR */}
+
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative flex justify-center"
+          initial={{ opacity: 0, scale: 0.9, x: 50 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="relative hidden lg:flex justify-center items-center"
         >
-          <div className="relative w-[320px] h-[320px] rounded-3xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 p-2 shadow-2xl">
-            <div className="w-full h-full rounded-2xl bg-[#0B0D10] flex items-center justify-center">
-              <img
-                src={profileImg}
-                alt="Raunak Kumar"
-                className="w-72 h-72 object-cover rounded-2xl"
-              />
-            </div>
+
+          <div className="absolute inset-0 z-0">
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-cyan-500/20 via-violet-500/10 to-transparent rounded-full blur-[80px]"
+            />
           </div>
 
-          {/* floating dots */}
-          <div className="absolute -top-6 -right-6 w-6 h-6 bg-purple-400 rounded-full animate-pulse" />
-          <div className="absolute -bottom-6 -left-6 w-4 h-4 bg-pink-400 rounded-full animate-pulse" />
+          <div className="relative z-10 w-[450px] h-[550px] group">
+
+            <div className="absolute -inset-4 border border-white/5 rounded-[40px] pointer-events-none transition-all duration-500 group-hover:-inset-2 group-hover:border-white/10" />
+            <div className="absolute -inset-8 border border-white/[0.02] rounded-[50px] pointer-events-none" />
+
+            <div className="w-full h-full glass border-white/10 rounded-[32px] overflow-hidden p-4">
+              <div className="relative w-full h-full rounded-[20px] overflow-hidden bg-[#0A0A0A]">
+                <img
+                  src={profileImg}
+                  alt="Raunak Kumar"
+                  className="w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
+                />
+
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+
+
+                <motion.div
+                  initial={{ y: 0 }}
+                  animate={{ y: [-10, 10, -10] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute top-8 left-8 px-4 py-2 glass rounded-full text-xs font-bold tracking-widest text-white/50 border border-white/10"
+                >
+                  BASED IN INDIA
+                </motion.div>
+              </div>
+            </div>
+
+
+          </div>
         </motion.div>
 
       </div>
