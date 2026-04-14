@@ -114,54 +114,75 @@ const Hero = () => {
 
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, x: 50 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative hidden lg:flex justify-center items-center"
-        >
-
-          <div className="absolute inset-0 z-0">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, 0]
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-cyan-500/20 via-violet-500/10 to-transparent rounded-full blur-[80px]"
-            />
-          </div>
-
-          <div className="relative z-10 w-[450px] h-[550px] group">
-
-            <div className="absolute -inset-4 border border-white/5 rounded-[40px] pointer-events-none transition-all duration-500 group-hover:-inset-2 group-hover:border-white/10" />
-            <div className="absolute -inset-8 border border-white/[0.02] rounded-[50px] pointer-events-none" />
-
-            <div className="w-full h-full glass border-white/10 rounded-[32px] overflow-hidden p-4">
-              <div className="relative w-full h-full rounded-[20px] overflow-hidden bg-[#0A0A0A]">
-                <img
-                  src={profileImg}
-                  alt="Raunak Kumar"
-                  className="w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110"
-                />
-
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
-
-
-                <motion.div
-                  initial={{ y: 0 }}
-                  animate={{ y: [-10, 10, -10] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute top-8 left-8 px-4 py-2 glass rounded-full text-xs font-bold tracking-widest text-white/50 border border-white/10"
-                >
-                  BASED IN INDIA
-                </motion.div>
-              </div>
-            </div>
-
-
-          </div>
-        </motion.div>
+           initial={{ opacity: 0, scale: 0.9, x: 50 }}
+           animate={{ opacity: 1, scale: 1, x: 0 }}
+           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+           className="relative flex justify-center items-center mt-12 lg:mt-0"
+           style={{ perspective: "1000px" }}
+         >
+ 
+           <div className="absolute inset-0 z-0">
+             <motion.div
+               animate={{
+                 scale: [1, 1.2, 1],
+                 rotate: [0, 10, 0]
+               }}
+               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-500/20 via-violet-500/10 to-transparent rounded-full blur-[80px]"
+             />
+           </div>
+ 
+           <motion.div 
+             className="relative z-10 w-full max-w-[320px] sm:max-w-[400px] lg:w-[450px] aspect-[4/5] group cursor-pointer"
+             whileHover={{ rotateX: 5, rotateY: -5, scale: 1.02 }}
+             transition={{ type: "spring", stiffness: 300, damping: 20 }}
+             style={{ transformStyle: "preserve-3d" }}
+           >
+ 
+             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-white/10 to-violet-500/20 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+ 
+             <div 
+               className="absolute -inset-4 border border-white/5 rounded-[40px] pointer-events-none transition-all duration-500 group-hover:-inset-2 group-hover:border-white/10" 
+               style={{ transform: "translateZ(-20px)" }}
+             />
+             <div 
+               className="absolute -inset-8 border border-white/[0.02] rounded-[50px] pointer-events-none" 
+               style={{ transform: "translateZ(-40px)" }}
+             />
+ 
+             <div 
+               className="w-full h-full glass border-white/10 rounded-[32px] overflow-hidden p-4 shadow-2xl shadow-black/50"
+               style={{ transform: "preserve-3d" }}
+             >
+               <div 
+                 className="relative w-full h-full rounded-[20px] overflow-hidden bg-[#0A0A0A]"
+                 style={{ transform: "translateZ(20px)" }}
+               >
+                 <img
+                   src={profileImg}
+                   alt="Raunak Kumar"
+                   className="w-full h-full object-cover grayscale-[20%] transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 relative z-10"
+                 />
+ 
+ 
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 z-20" />
+ 
+ 
+                 <motion.div
+                   initial={{ y: 0 }}
+                   animate={{ y: [-10, 10, -10] }}
+                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                   className="absolute top-8 left-8 px-4 py-2 glass rounded-full text-xs font-bold tracking-widest text-white/50 border border-white/10 shadow-lg"
+                   style={{ transform: "translateZ(60px)" }}
+                 >
+                   BASED IN INDIA
+                 </motion.div>
+               </div>
+             </div>
+ 
+ 
+           </motion.div>
+         </motion.div>
 
       </div>
     </section>

@@ -40,7 +40,7 @@ const projects = [
     title: "Isometric 2048",
     tech: ["JavaScript", "Canvas", "Algorithms"],
     desc: "A reimagined 2048 game with 3D isometric rendering, smooth tile merging logic, and a neon aesthetic.",
-    image: null, 
+    image: null,
     link: "#",
     github: "https://github.com/raunak5616",
     color: "#00ff88"
@@ -49,10 +49,11 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-32 mt-20">
-      
-      <div className="flex flex-col items-center mb-24 text-center">
-        <motion.div 
+    <section className="w-full px-6 lg:px-12 py-32 mt-20">
+
+      {/* Heading */}
+      <div className="flex flex-col items-center mb-20 text-center">
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -60,18 +61,20 @@ const Projects = () => {
         >
           Selected Work
         </motion.div>
-        
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-7xl font-bold"
+          className="text-4xl sm:text-5xl md:text-7xl font-bold"
         >
           Featured <span className="text-white/40 italic">Projects</span>
         </motion.h2>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* ✅ AUTO RESPONSIVE GRID (NO SLIM CARDS) */}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8">
+
         {projects.map((project, index) => (
           <motion.div
             key={project.title}
@@ -79,100 +82,91 @@ const Projects = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.8 }}
-            className={`group relative h-[520px] rounded-[32px] overflow-hidden glass border-white/5 ${index === 1 ? 'lg:col-span-1' : ''}`}
+
+            className="group relative w-full max-w-[420px] mx-auto h-[480px] rounded-3xl overflow-hidden glass border-white/10"
+
+            whileHover={{ y: -10 }}
+            style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
           >
 
+            {/* Background */}
             <div className="absolute inset-0 z-0">
               {project.image ? (
-                <img 
-                  src={project.image} 
+                <img
+                  src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
                 />
               ) : (
-                <div 
-                  className="w-full h-full bg-[#0A0A0A] flex items-center justify-center font-['Outfit']"
-                  style={{ background: `radial-gradient(circle at center, ${project.color}10, transparent)` }}
-                >
-                  <span className="text-white/5 font-bold text-9xl uppercase tracking-tighter rotate-12">
-                     2048
-                  </span>
+                <div className="w-full h-full bg-[#050505] flex items-center justify-center text-white/20 text-xl">
+                  {project.title}
                 </div>
               )}
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
             </div>
 
+            {/* Content */}
+            <div className="absolute inset-0 z-10 p-6 flex flex-col justify-between">
 
-            <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
-              <div className="translate-y-12 group-hover:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]">
+              {/* Tech */}
+              <div className="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="px-3 py-1 text-[9px] font-bold text-white/70 glass rounded-lg"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map(t => (
-                    <span key={t} className="px-3 py-1 text-[10px] font-medium font-mono text-white/50 glass rounded-full border-white/5">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+              {/* Info */}
+              <div className="w-full transition-all duration-500 ease-in-out group-hover:-translate-y-2">
+                <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-400 group-hover:mb-2">
                   {project.title}
                 </h3>
-                
-                <p className="text-sm text-white/40 mb-6 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {project.desc}
-                </p>
 
-                <div className="flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                  <div className="flex gap-3">
-                    <a href={project.github} target="_blank" className="p-3 glass rounded-full hover:bg-white text-white hover:text-black transition-all flex items-center justify-center">
-                      <Github size={18} />
-                    </a>
-                    
-                    {project.links ? (
-                       <div className="flex-1 grid grid-cols-1 gap-2">
-                         {project.links.map(link => (
-                            <a 
-                              key={link.label}
-                              href={link.url} 
-                              target="_blank"
-                              className="flex items-center justify-center gap-2 px-4 py-2 glass rounded-xl text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-white hover:text-black transition-all"
-                            >
-                              <link.icon size={12} /> {link.label}
-                            </a>
-                         ))}
-                       </div>
-                    ) : (
-                      <a href={project.link} target="_blank" className="flex-1 flex items-center justify-center gap-2 px-6 py-3 glass rounded-xl text-xs font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-white hover:text-black transition-all">
-                        Visit Site <ExternalLink size={14} />
+                <div className="max-h-0 opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-500 ease-in-out overflow-hidden">
+                  <p className="text-sm text-white/50 mb-4 line-clamp-2">
+                    {project.desc}
+                  </p>
+
+                  {project.links ? (
+                    <div className="flex flex-col gap-2">
+                      {project.links.map(link => (
+                        <a
+                          key={link.label}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex justify-between px-4 py-2 glass rounded-lg text-xs hover:bg-white/10 transition-colors"
+                        >
+                          <span className="flex items-center gap-2">
+                            <link.icon size={14} />
+                            {link.label}
+                          </span>
+                          <ArrowRight size={14} />
+                        </a>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-lg hover:bg-white/10 transition-colors">
+                        <Github size={18} />
                       </a>
-                    )}
-                  </div>
+
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-2 glass rounded-lg text-xs flex justify-between items-center hover:bg-white/10 transition-colors">
+                        Visit <ExternalLink size={14} />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
+
             </div>
-
-
-            <div 
-               className="absolute top-0 right-0 w-32 h-32 blur-[80px] opacity-0 group-hover:opacity-30 transition-opacity duration-500" 
-               style={{ backgroundColor: project.color }}
-            />
           </motion.div>
         ))}
       </div>
-
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="mt-20 flex justify-center"
-      >
-        <a href="https://github.com/raunak5616" target="_blank" className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors duration-300">
-           <span className="text-sm font-bold uppercase tracking-[0.3em]">View Archive on GitHub</span>
-           <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
-        </a>
-      </motion.div>
 
     </section>
   );

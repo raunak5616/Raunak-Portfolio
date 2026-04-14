@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../../component/footer";
 
 const Layout = () => {
   const location = useLocation();
+
+  const handleExitComplete = () => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -57,19 +62,25 @@ const Layout = () => {
         </motion.div>
       </nav>
 
-      <main className="relative z-10">
-        <AnimatePresence mode="wait">
+      <main className="relative z-10 flex flex-col min-h-screen overflow-hidden">
+        <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            transition={{ 
+              duration: 0.6, 
+              ease: [0.22, 1, 0.36, 1],
+              opacity: { duration: 0.4 },
+              filter: { duration: 0.4 }
+            }}
+            className="flex-1 flex flex-col will-change-[transform,opacity,filter]"
           >
             <Outlet />
+            <Footer />
           </motion.div>
         </AnimatePresence>
-        <Footer />
       </main>
     </div>
   );
