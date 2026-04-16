@@ -1,0 +1,35 @@
+[33mcommit 9436dc1fa2c36a48c1f3c25822991af7621c49ff[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: aaditrishukla <aaditrishukla69@gmail.com>
+Date:   Thu Apr 16 10:55:24 2026 +0530
+
+    feat: implement hero and projects pages with magnetic button component and vercel configuration
+
+[33mcommit a80f03608258d3ff3750fa379d455c3cbe696c6f[m
+Author: aaditrishukla <aaditrishukla69@gmail.com>
+Date:   Tue Apr 14 15:02:15 2026 +0530
+
+    feat: implement projects, hero, and layout page components with framer-motion animations
+
+[33mcommit e7a278095cf6205906e4d22374236afffe847453[m
+Author: aaditrishukla <aaditrishukla69@gmail.com>
+Date:   Mon Apr 13 15:08:43 2026 +0530
+
+    feat: initialize portfolio project with React, Tailwind CSS, Framer Motion, and core UI components
+
+[33mcommit f6e42b69c29f5b255b5911c67c93b53eddc71ce3[m
+Author: raunak <raunakkh8789@gmail.com>
+Date:   Wed Jan 21 20:51:58 2026 +0530
+
+    Update main.jsx
+
+[33mcommit 7f396f92ef7ef816e3949e9178e408e4c79a878c[m
+Author: raunak <raunakkh8789@gmail.com>
+Date:   Wed Jan 21 20:34:42 2026 +0530
+
+    DONE
+
+[33mcommit 2dbee3e5588cab913a5886903dc816cbc3a43cd0[m
+Author: raunak <raunakkh8789@gmail.com>
+Date:   Wed Jan 21 13:15:22 2026 +0530
+
+    fortfolio update
