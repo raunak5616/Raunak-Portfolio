@@ -74,10 +74,10 @@ const Hero = () => {
             <MagneticButton>
               <Link
                 to="/projects"
-                className="group flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-bold transition-all hover:pr-8"
+                className="group flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-bold transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 View Work
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                <ArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" size={20} />
               </Link>
             </MagneticButton>
 

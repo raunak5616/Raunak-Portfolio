@@ -84,10 +84,18 @@ const Projects = () => {
             transition={{ delay: index * 0.1, duration: 0.8 }}
 
             className="group relative w-full max-w-[420px] mx-auto h-[480px] rounded-3xl overflow-hidden glass border-white/10"
-
-            whileHover={{ y: -10 }}
+            whileHover="hover"
+            initial="initial"
+            animate="animate"
+            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
             style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
           >
+            {/* Added a stable hover wrapper if needed, but let's try this first */}
+            <motion.div 
+               variants={{ hover: { y: -8 } }}
+               transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+               className="w-full h-full"
+            >
 
             {/* Background */}
             <div className="absolute inset-0 z-0">
@@ -102,14 +110,14 @@ const Projects = () => {
                   {project.title}
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             </div>
 
-            {/* Content */}
-            <div className="absolute inset-0 z-10 p-6 flex flex-col justify-between">
-
-              {/* Tech */}
-              <div className="flex flex-wrap gap-2">
+            {/* Content Container */}
+            <div className="absolute inset-0 z-10 p-6 flex flex-col justify-end">
+              
+              {/* Tech Tags - Always Visible but fade slightly on hover */}
+              <div className="flex flex-wrap gap-2 mb-4 transition-opacity duration-300 group-hover:opacity-80">
                 {project.tech.map((t) => (
                   <span
                     key={t}
@@ -120,13 +128,22 @@ const Projects = () => {
                 ))}
               </div>
 
-              {/* Info */}
-              <div className="w-full transition-all duration-500 ease-in-out group-hover:-translate-y-2">
-                <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-400 group-hover:mb-2">
+              {/* Animated Expansion */}
+              <div className="w-full">
+                <h3 className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-400">
                   {project.title}
                 </h3>
 
-                <div className="max-h-0 opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-500 ease-in-out overflow-hidden">
+                <motion.div 
+                  initial={{ height: 0, opacity: 0 }}
+                  variants={{
+                    hover: { height: "auto", opacity: 1, marginTop: 12 }
+                  }}
+                  animate={undefined} // Controlled by parent group hover if possible, but let's use CSS group-hover for simplicity or motion's whileHover logic
+                  transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                  className="overflow-hidden"
+                  // Using animate logic via variants triggered by parent
+                >
                   <p className="text-sm text-white/50 mb-4 line-clamp-2">
                     {project.desc}
                   </p>
@@ -160,10 +177,11 @@ const Projects = () => {
                       </a>
                     </div>
                   )}
-                </div>
+                </motion.div>
               </div>
 
             </div>
+            </motion.div>
           </motion.div>
         ))}
       </div>
