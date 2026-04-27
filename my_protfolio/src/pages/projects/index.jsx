@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, ArrowRight, User, ShoppingBag, Truck } from "lucide-react";
 import ecommerceImg from "../../assets/ecommerce.png";
@@ -48,6 +49,15 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="w-full px-6 lg:px-12 py-32 mt-20">
 
@@ -81,13 +91,15 @@ const Projects = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1, duration: 0.8 }}
-
-            className="group relative w-full max-w-[420px] mx-auto h-[480px] rounded-3xl overflow-hidden glass border-white/10"
             whileHover="hover"
-            initial="initial"
-            animate="animate"
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            whileTap="hover"
+            animate={isMobile ? "hover" : "initial"}
+            transition={{ 
+              initial: { duration: 0.8, delay: index * 0.1 },
+              whileInView: { duration: 0.8, delay: index * 0.1 },
+              hover: { duration: 0.4, ease: [0.23, 1, 0.32, 1] }
+            }}
+            className="group relative w-full lg:max-w-[420px] mx-auto h-[480px] rounded-3xl overflow-hidden glass border-white/10 cursor-pointer"
             style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
           >
             {/* Added a stable hover wrapper if needed, but let's try this first */}
