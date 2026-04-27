@@ -22,7 +22,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 px-6 md:px-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-32 md:pt-20 px-6 md:px-20 overflow-hidden">
 
       <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
 
