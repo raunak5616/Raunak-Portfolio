@@ -1,20 +1,14 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, ArrowRight, User, ShoppingBag, Truck } from "lucide-react";
 import ecommerceImg from "../../assets/ecommerce.png";
 import portfolioImg from "../../assets/portfolio.png";
 import flowerkartImg from "../../assets/flowerkart.png";
+import isometricImg from "../../assets/isometric_2048.png";
+import flappyImg from "../../assets/flappy_auth_arcade.png";
 
 const projects = [
-  {
-    title: "E-Commerce Ecosystem",
-    tech: ["React", "Express", "Node.js", "MongoDB", "Razorpay"],
-    desc: "A full-scale production-ready marketplace with real-time analytics, secure payments, and a robust vendor dashboard.",
-    image: ecommerceImg,
-    link: "https://e-commerce-xnuk.vercel.app/",
-    github: "https://github.com/raunak5616",
-    color: "#00f2ff"
-  },
   {
     title: "FlowerKart Ecosystem",
     tech: ["MERN Stack", "Framer Motion", "Socket.io", "Tailwind"],
@@ -38,11 +32,29 @@ const projects = [
     color: "#bc13fe"
   },
   {
+    title: "Flappy Bird Arcade",
+    tech: ["React", "Express", "Node.js", "JWT Auth", "Tailwind"],
+    desc: "A game-inspired authentication dashboard with dark/light mode, smooth bird physics, account handling, and a global leaderboard.",
+    image: flappyImg,
+    link: "https://authpract-kohl.vercel.app/",
+    github: "https://github.com/raunak5616",
+    color: "#ff3366"
+  },
+  {
+    title: "E-Commerce Ecosystem",
+    tech: ["React", "Express", "Node.js", "MongoDB", "Razorpay"],
+    desc: "A full-scale production-ready marketplace with real-time analytics, secure payments, and a robust vendor dashboard.",
+    image: ecommerceImg,
+    link: "https://e-commerce-xnuk.vercel.app/",
+    github: "https://github.com/raunak5616",
+    color: "#00f2ff"
+  },
+  {
     title: "Isometric 2048",
     tech: ["JavaScript", "Canvas", "Algorithms"],
     desc: "A reimagined 2048 game with 3D isometric rendering, smooth tile merging logic, and a neon aesthetic.",
-    image: null,
-    link: "#",
+    image: isometricImg,
+    link: "/projects/isometric-2048",
     github: "https://github.com/raunak5616",
     color: "#00ff88"
   }
@@ -184,9 +196,15 @@ const Projects = () => {
                         <Github size={18} />
                       </a>
 
-                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-2 glass rounded-lg text-xs flex justify-between items-center hover:bg-white/10 transition-colors">
-                        Visit <ExternalLink size={14} />
-                      </a>
+                      {project.link.startsWith("/") ? (
+                        <Link to={project.link} className="flex-1 px-4 py-2 glass rounded-lg text-xs flex justify-between items-center hover:bg-white/10 transition-colors">
+                          Visit <ArrowRight size={14} />
+                        </Link>
+                      ) : (
+                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex-1 px-4 py-2 glass rounded-lg text-xs flex justify-between items-center hover:bg-white/10 transition-colors">
+                          Visit <ExternalLink size={14} />
+                        </a>
+                      )}
                     </div>
                   )}
                 </motion.div>
