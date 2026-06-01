@@ -488,6 +488,19 @@ const Isometric2048 = () => {
       }
     });
 
+    // Filter duplicates: if multiple tiles end up at the same row and col (merging),
+    // only keep one of them to prevent double rendering.
+    const filteredTiles = [];
+    const seenCells = new Set();
+    newAnimTiles.forEach(tile => {
+      const cellKey = `${tile.row},${tile.col}`;
+      if (!seenCells.has(cellKey)) {
+        seenCells.add(cellKey);
+        filteredTiles.push(tile);
+      }
+    });
+    tilesRef.current = filteredTiles;
+
     // Apply grid updates
     const nextGrid = addRandomTile(finalGrid);
     setGrid(nextGrid);
