@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Gamepad2, User, Key, LogOut, Trophy, Info, RefreshCw, 
-  Moon, Sun, CheckCircle, AlertTriangle, ArrowLeft, Copy, Eye, EyeOff
+  Moon, Sun, CheckCircle, AlertTriangle, ArrowLeft, Copy, Eye, EyeOff,
+  Maximize2, Minimize2
 } from "lucide-react";
 
 // ==========================================
@@ -212,12 +213,14 @@ const Isometric2048 = () => {
 
   // Canvas Refs & Animation
   const canvasRef = useRef(null);
+  const cabinetRef = useRef(null);
   const animationRef = useRef(null);
   const tilesRef = useRef([]); // holds animate positions
   const nextTileId = useRef(1);
 
   // Input Gesture variables
   const touchStart = useRef({ x: 0, y: 0 });
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Update current user from token
   useEffect(() => {
@@ -264,7 +267,11 @@ const Isometric2048 = () => {
       if (!canvas) return;
       const rect = canvas.parentElement.getBoundingClientRect();
       canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = Math.max(380, rect.width * 0.85) * window.devicePixelRatio;
+      if (document.fullscreenElement) {
+        canvas.height = rect.height * window.devicePixelRatio;
+      } else {
+        canvas.height = Math.max(380, rect.width * 0.85) * window.devicePixelRatio;
+      }
       canvas.style.width = "100%";
       canvas.style.height = "100%";
     };
@@ -273,6 +280,39 @@ const Isometric2048 = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+      // Force recalculation of canvas size
+      setTimeout(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width * window.devicePixelRatio;
+        if (document.fullscreenElement) {
+          canvas.height = rect.height * window.devicePixelRatio;
+        } else {
+          canvas.height = Math.max(380, rect.width * 0.85) * window.devicePixelRatio;
+        }
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+      }, 150);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    const cabinet = cabinetRef.current;
+    if (!cabinet) return;
+    if (!document.fullscreenElement) {
+      cabinet.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
 
   // Main Canvas Render loop
   useEffect(() => {
@@ -1100,27 +1140,36 @@ const Isometric2048 = () => {
               </div>
               
               {/* Theme Settings Selector */}
-              <div className="flex items-center gap-1 bg-black/40 border border-white/5 p-1 rounded-full">
+              <div className="flex items-center gap-1 bg-black/40 border border-white/5 p-1 rounded-full text-white/40">
                 <button 
                   onClick={() => setThemeMode("dark")}
-                  className={`p-1.5 rounded-full transition-colors ${themeMode === "dark" ? "bg-cyan-500 text-black" : "text-white/40 hover:text-white/80"}`}
+                  className={`p-1.5 rounded-full transition-colors cursor-pointer ${themeMode === "dark" ? "bg-cyan-500 text-black font-bold" : "hover:text-white"}`}
                   title="Cyber Neon Theme"
                 >
                   <Moon size={14} />
                 </button>
                 <button 
                   onClick={() => setThemeMode("light")}
-                  className={`p-1.5 rounded-full transition-colors ${themeMode === "light" ? "bg-pink-500 text-white" : "text-white/40 hover:text-white/80"}`}
+                  className={`p-1.5 rounded-full transition-colors cursor-pointer ${themeMode === "light" ? "bg-pink-500 text-white font-bold" : "hover:text-white"}`}
                   title="Retro Classic Theme"
                 >
                   <Sun size={14} />
+                </button>
+                <div className="w-[1px] h-3.5 bg-white/15 mx-1 shrink-0" />
+                <button 
+                  onClick={toggleFullscreen}
+                  className="p-1.5 rounded-full hover:text-white transition-colors cursor-pointer"
+                  title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Cabinet"}
+                >
+                  {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
                 </button>
               </div>
             </div>
 
             {/* Canvas Cabinet Body */}
             <div 
-              className="relative rounded-2xl overflow-hidden border border-white/10 bg-black flex justify-center items-center select-none cursor-grab active:cursor-grabbing"
+              ref={cabinetRef}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-black flex justify-center items-center select-none cursor-grab active:cursor-grabbing w-full"
               style={{
                 background: themeMode === "dark" 
                   ? "radial-gradient(circle at center, #0d0c1e 0%, #030308 100%)" 
