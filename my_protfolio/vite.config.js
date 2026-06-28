@@ -11,4 +11,18 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  build: {
+    target: "es2022",
+    modulePreload: {
+      polyfill: false,
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          motion: ["framer-motion"],
+        },
+      },
+    },
+  },
 });

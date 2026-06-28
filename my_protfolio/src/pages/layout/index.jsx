@@ -1,13 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../../component/footer";
+import { preloadRoute } from "../../utils/routePreload";
 
 const Layout = () => {
   const location = useLocation();
+  const hasMounted = useRef(false);
+
+  useEffect(() => {
+    hasMounted.current = true;
+  }, []);
 
   const handleExitComplete = () => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   const navItems = [
@@ -29,7 +35,7 @@ const Layout = () => {
       </div>
 
       {/* Navbar - Floating Pill */}
-      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
+      <nav aria-label="Primary navigation" className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
         <motion.div 
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -40,6 +46,8 @@ const Layout = () => {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
+              onMouseEnter={() => preloadRoute(item.name.toLowerCase())}
+              onFocus={() => preloadRoute(item.name.toLowerCase())}
               className={({ isActive }) => `
                 relative px-6 py-2.5 text-sm font-medium transition-all duration-300 rounded-full
                 ${isActive ? "text-white" : "text-white/50 hover:text-white/80"}
@@ -63,10 +71,10 @@ const Layout = () => {
       </nav>
 
       <main className="relative z-10 flex flex-col min-h-screen overflow-hidden">
-        <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+        <AnimatePresence mode="wait" initial={false} onExitComplete={handleExitComplete}>
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+            initial={hasMounted.current ? { opacity: 0, scale: 1.05, filter: "blur(10px)" } : false}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             transition={{ 

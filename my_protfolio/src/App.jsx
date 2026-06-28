@@ -1,13 +1,18 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Hero  from "./pages/hero";
-import  About  from "./pages/about";
-import  Projects  from "./pages/projects";
-import  Contact  from "./pages/contact";
-import Layout from "./pages/layout"; 
-import Isometric2048 from "./pages/isometric2048";
+import Layout from "./pages/layout";
+import Hero from "./pages/hero";
+import PageLoader from "./component/PageLoader";
+import { routeImporters } from "./utils/routePreload";
+
+const About = lazy(routeImporters.about);
+const Projects = lazy(routeImporters.projects);
+const Contact = lazy(routeImporters.contact);
+const Isometric2048 = lazy(routeImporters.isometric2048);
 
 function App() {
   return (
+    <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Hero />} />
@@ -17,6 +22,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
+    </Suspense>
   );
 }
 

@@ -1,31 +1,31 @@
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const MagneticButton = ({ children, className = "", ...props }) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 100, damping: 20, mass: 0.5 });
+  const springY = useSpring(y, { stiffness: 100, damping: 20, mass: 0.5 });
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
     const { width, height, left, top } = ref.current.getBoundingClientRect();
-    const x = (clientX - (left + width / 2)) * 0.35;
-    const y = (clientY - (top + height / 2)) * 0.35;
-    setPosition({ x, y });
+    x.set((clientX - (left + width / 2)) * 0.35);
+    y.set((clientY - (top + height / 2)) * 0.35);
   };
 
   const handleMouseLeave = () => {
-    setPosition({ x: 0, y: 0 });
+    x.set(0);
+    y.set(0);
   };
-
-  const { x, y } = position;
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{ x, y }}
-      transition={{ type: "spring", stiffness: 100, damping: 20, mass: 0.5 }}
+      style={{ x: springX, y: springY }}
       className={`relative inline-flex items-center justify-center ${className}`}
       {...props}
     >
